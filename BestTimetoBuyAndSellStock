@@ -1,0 +1,24 @@
+function maxProfit(prices: number[]): number {
+    let profit = 0;
+    let boughtat=0, bought = false;
+    for(let i=0;i<(prices.length-1);i++){
+        // let's assuming we are buying at ith day, the next day the price to be increased
+      
+        if(prices[i]<prices[i+1] && !bought){
+            boughtat= i;
+            bought = true;
+        }
+        if(prices[i]>prices[i+1] && bought){
+            bought = false;
+            profit += (prices[i]-prices[boughtat]);
+        }
+    }
+    if(bought === true){
+        profit += (prices[prices.length-1] - prices[boughtat]);
+    }
+    return profit;
+
+};
+
+
+//https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/
