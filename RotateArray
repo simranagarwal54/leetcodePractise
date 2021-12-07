@@ -1,0 +1,45 @@
+/**
+ Do not return anything, modify nums in-place instead.
+ */
+
+/** Solution 1: Using extra space: brute force
+function rotate(nums: number[], k: number): void {
+    
+    let n = nums.length;
+    let temp: number[]=new Array(n);
+    let j=0;
+    for(let i=k;i>0;i--){
+        temp[j++] = nums[n-i];
+    }
+    for(let i=0;i<(n-k);i++){
+        temp[j++]= nums[i];
+    }
+    for(let i=0;i<n;i++){
+        nums[i]=temp[i];
+    }
+};
+*/
+
+// hint : 3 reverse 
+function rotate(nums: number[], k: number): void {
+    if(nums.length === 0 || nums.length === 1)
+        return;
+    const t = k%(nums.length);
+    if(t===0){
+        return;
+    }
+    reverse(nums,0,nums.length-1);
+    reverse(nums,0,t-1);
+    reverse(nums,t, nums.length-1);
+};
+
+function reverse(nums: number[], start: number, end: number){
+    let temp;
+    for(let i=start;i<(start+end)/2;i++){
+        temp = nums[i];
+        nums[i] = nums[start+end-i];
+        nums[start+end-i] = temp;
+    }
+};
+
+//https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/646/
