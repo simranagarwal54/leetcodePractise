@@ -1,0 +1,65 @@
+/*
+Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
+
+If target is not found in the array, return [-1, -1].
+https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+**/
+
+
+
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[]  ans = new int[]{-1,-1};
+        if(nums.length == 0)
+            return ans;
+        ans[0]=findfirstOccurence(nums,target);
+        if(ans[0] != -1)
+            ans[1]=findLastOccurence(nums,target, ans[0]);
+       return ans; 
+    }
+    
+    private int findfirstOccurence(int[] nums, int target) {
+        int f = -1, l=nums.length;
+        while((l-f)>1) {
+            int mid = (f+l)/2;
+            if(nums[mid]<target)
+                f=mid;
+            else 
+                l=mid;
+        }
+        return (l<nums.length && nums[l]==target) ? l : -1;
+    } 
+    
+    private int findLastOccurence(int[] nums, int target, int start) {
+        int f = start-1, l=nums.length;
+        while((l-f)>1) {
+            int mid = (f+l)/2;
+            if(nums[mid]<=target)
+                f=mid;
+            else 
+                l=mid;
+        }
+        return (f>start-1 && nums[f]==target) ? f : -1;
+    } 
+}
+
+
+/*
+will there be a duplicate value of the target always?  no, in that case return same index if target found
+
+[5,7,7,8,8,10]
+brute force == > traverse through loop find first occurence of target (linear search)== add that to ans[0] and ans[1] 
+continue traversing. if(start != -1 and target== nums[i])  ans[1] = i
+o(n)
+Can do the same with 2 pointer approach 
+
+bsearch:  2 boundaries
+// first tp find the first occurence
+5 7 7 | 8 8 10  return l  |  f = where all elements less than target
+// second to find the last occurence 
+5 7 7 8 8 | 10   f = where all elements less thn equal to target
+
+
+
+
+**/
