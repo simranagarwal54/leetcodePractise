@@ -1,0 +1,24 @@
+/*
+https://leetcode.com/problems/search-a-2d-matrix/
+**/
+
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        
+        //lets assume we have a sorted array and do Bsearch
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        int size = rows * columns;
+        int f=-1, l=size;
+        while((l-f)>1){
+            int mid = (l+f)/2;
+            int correspondingColumn = mid%columns;
+            int correspondingRow = (mid-correspondingColumn)/columns;
+            if(matrix[correspondingRow][correspondingColumn]<target)
+                f=mid;
+            else
+                l=mid;
+        }
+        return (l<size && matrix[(l-(l%columns))/columns][l%columns]==target);
+    }
+}
